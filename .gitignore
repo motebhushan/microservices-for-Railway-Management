@@ -1,0 +1,32 @@
+# Maven
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+.nb-gradle/
+
+# Logs
+*.log
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Other
+bin/
+out/
+.gemini/
+.metadata/
+/tmp/
+*.pdf
+# (Exclude PDFs if they are just project documents you want to keep local, 
+# but I will keep it for now unless it causes errors)
