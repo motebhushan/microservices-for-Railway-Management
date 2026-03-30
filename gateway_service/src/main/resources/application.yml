@@ -1,0 +1,45 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      routes:
+        - id: auth-login
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/login
+
+        - id: auth-register
+          uri: lb://user-service
+          predicates:
+            - Path=/auth/register
+
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/users/**
+
+        - id: train-service
+          uri: lb://train-service
+          predicates:
+            - Path=/trains/**
+
+        - id: reservation-service
+          uri: lb://reservation-service
+          predicates:
+            - Path=/tickets/**
+
+        - id: admin-service
+          uri: lb://admin-service
+          predicates:
+            - Path=/admin/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true

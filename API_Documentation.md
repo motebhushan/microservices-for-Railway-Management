@@ -1,14 +1,20 @@
 # Railway Reservation System - API Documentation
 
-This document contains all the APIs for testing out the microservices via Postman or cURL.
+This document contains all the APIs for testing out the microservices. 
+
+> [!IMPORTANT]
+> All requests should be directed to the **API Gateway** (Port **8080**). The Gateway will automatically route your requests to the correct underlying microservice.
 
 ---
 
-## 1. Auth Service (Port 8082)
+## Central Entry Point: API Gateway (Port 8080)
+**Base URL**: `http://localhost:8080`
 
-**Service Name**: Authentication Service
+---
+
+## 1. Auth Service
 **API Name**: User Login
-**URL**: `POST http://localhost:8082/auth/login`
+**URL**: `POST http://localhost:8080/auth/login`
 **Body**: 
 ```json
 {
@@ -21,11 +27,9 @@ This document contains all the APIs for testing out the microservices via Postma
 
 ---
 
-## 2. User Service (Port 8083)
-
-**Service Name**: User Service
+## 2. User Service
 **API Name**: Register User
-**URL**: `POST http://localhost:8083/auth/register` (or `/users/register`)
+**URL**: `POST http://localhost:8080/auth/register`
 **Body**:
 ```json
 {
@@ -38,43 +42,35 @@ This document contains all the APIs for testing out the microservices via Postma
 > [!TIP]
 > The `username` field is now optional. If you omit it, your `email` will be used as your username for login.
 
-**Service Name**: User Service
 **API Name**: Get All Users
-**URL**: `GET http://localhost:8083/users`
+**URL**: `GET http://localhost:8080/users`
 **Body**: _None_
 
-**Service Name**: User Service
 **API Name**: Get User by ID
-**URL**: `GET http://localhost:8083/users/{id}`
+**URL**: `GET http://localhost:8080/users/{id}`
 **Body**: _None_
 
 ---
 
-## 3. Train Service (Port 8084)
-
-**Service Name**: Train Service
+## 3. Train Service
 **API Name**: Get All Trains
-**URL**: `GET http://localhost:8084/trains`
+**URL**: `GET http://localhost:8080/trains`
 **Body**: _None_
 
-**Service Name**: Train Service
 **API Name**: Search Trains by Route
-**URL**: `GET http://localhost:8084/trains/search?source=Delhi&destination=Mumbai`
+**URL**: `GET http://localhost:8080/trains/search?source=Delhi&destination=Mumbai`
 **Body**: _None_
 
-**Service Name**: Train Service
 **API Name**: Get Train by ID
-**URL**: `GET http://localhost:8084/trains/{id}`
+**URL**: `GET http://localhost:8080/trains/{id}`
 **Body**: _None_
 
-**Service Name**: Train Service
 **API Name**: Delete Train (Admin)
-**URL**: `DELETE http://localhost:8084/trains/{id}`
+**URL**: `DELETE http://localhost:8080/trains/{id}`
 **Body**: _None_
 
-**Service Name**: Train Service
 **API Name**: Add New Train (Admin)
-**URL**: `POST http://localhost:8084/trains`
+**URL**: `POST http://localhost:8080/trains`
 **Body**:
 ```json
 {
@@ -89,12 +85,9 @@ This document contains all the APIs for testing out the microservices via Postma
   "ticketFare": 1500.50
 }
 ```
-> [!IMPORTANT]
-> You **must** include the `"availableSeats"` field in your request. If you omit it, the database will store a `null` value, which will cause the Reservation Service to crash with a `NullPointerException` during booking.
 
-**Service Name**: Train Service
 **API Name**: Update Train Details (Admin)
-**URL**: `PUT http://localhost:8084/trains/1`
+**URL**: `PUT http://localhost:8080/trains/1`
 **Body**:
 ```json
 {
@@ -111,11 +104,9 @@ This document contains all the APIs for testing out the microservices via Postma
 
 ---
 
-## 4. Reservation Service (Port 8085)
-
-**Service Name**: Reservation Service
+## 4. Reservation Service
 **API Name**: Reserve Ticket
-**URL**: `POST http://localhost:8085/tickets/reserve`
+**URL**: `POST http://localhost:8080/tickets/reserve`
 **Body**:
 ```json
 {
@@ -128,54 +119,44 @@ This document contains all the APIs for testing out the microservices via Postma
 }
 ```
 
-**Service Name**: Reservation Service
 **API Name**: Cancel Ticket
-**URL**: `POST http://localhost:8085/tickets/cancel/{pnr}`
+**URL**: `POST http://localhost:8080/tickets/cancel/{pnr}`
 **Body**: _None_
 
-**Service Name**: Reservation Service
 **API Name**: Get Ticket by PNR
-**URL**: `GET http://localhost:8085/tickets/pnr/{pnr}`
-**Example**: `GET http://localhost:8085/tickets/pnr/A1B2C3D4E5`
+**URL**: `GET http://localhost:8080/tickets/pnr/{pnr}`
+**Example**: `GET http://localhost:8080/tickets/pnr/A1B2C3D4E5`
 **Body**: _None_
 
-**Service Name**: Reservation Service
 **API Name**: Get Tickets by User
-**URL**: `GET http://localhost:8085/tickets/user/1`
+**URL**: `GET http://localhost:8080/tickets/user/1`
 **Body**: _None_
 
-**Service Name**: Reservation Service
 **API Name**: Get All Tickets
-**URL**: `GET http://localhost:8085/tickets`
+**URL**: `GET http://localhost:8080/tickets`
 **Body**: _None_
 
 ---
 
-## 5. Admin Service (Port 8086)
-
-**Service Name**: Admin Service
+## 5. Admin Service
 **API Name**: View All Trains
-**URL**: `GET http://localhost:8086/admin/trains`
+**URL**: `GET http://localhost:8080/admin/trains`
 **Body**: _None_
 
-**Service Name**: Admin Service
 **API Name**: Add Train
-**URL**: `POST http://localhost:8086/admin/trains`
+**URL**: `POST http://localhost:8080/admin/trains`
 **Body**: Same as Train Service Add Train body.
 
-**Service Name**: Admin Service
 **API Name**: Delete Train
-**URL**: `DELETE http://localhost:8086/admin/trains/{id}`
+**URL**: `DELETE http://localhost:8080/admin/trains/{id}`
 **Body**: _None_
 
-**Service Name**: Admin Service
 **API Name**: View All Reservations
-**URL**: `GET http://localhost:8086/admin/reservations`
+**URL**: `GET http://localhost:8080/admin/reservations`
 **Body**: _None_
 
-**Service Name**: Admin Service
 **API Name**: View All Users
-**URL**: `GET http://localhost:8086/admin/users`
+**URL**: `GET http://localhost:8080/admin/users`
 **Body**: _None_
 
 ---
